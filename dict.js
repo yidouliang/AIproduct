@@ -1,4 +1,4 @@
-function showDictSelect(id, type, all) {
+﻿function showDictSelect(id, type, all) {
 	var data = getDict(type);
 	var select = $("#" + id);
 	select.empty();
@@ -13,6 +13,8 @@ function showDictSelect(id, type, all) {
 
 	return data;
 }
+
+testsdfsdf
 
 function getDict(type) {
 	var v = sessionStorage[type];
