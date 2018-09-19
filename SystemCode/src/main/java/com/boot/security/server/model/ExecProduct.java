@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class ExecProduct extends BaseEntity<Long> {
 
-	private String productCode;
+    private String productCode;
 	private String productName;
 	private String productDesc;
 	private BigDecimal productTypeId;
