@@ -43,10 +43,21 @@ function init(){
                 {"data" : "paystatus", "defaultContent" : ""},
                 {"data" : "failreason", "defaultContent" : ""},
                 {"data" : "paytype", "defaultContent" : ""},
-                {"data" : "payurl", "defaultContent" : ""}
+                {"data" : "payurl", "defaultContent" : ""},
                 // {"data" : "ordercomment", "defaultContent" : ""},
                 // {"data" : "datastate", "defaultContent" : ""}
-
+                {
+                    "data": "",
+                    "defaultContent": "",
+                    "orderable":false,
+                    "render": function (data, type, row) {
+                        var id = row['id'];
+                        var href = "updateOrderFirstLevel.html?id=" + id;
+                        var edit = buttonEdit(href, "", pers);
+                        var del = buttonDel(id, "", pers);
+                        return edit + del;
+                    }
+                },
 
             ],
             "order": [[ 0, "asc" ]]
