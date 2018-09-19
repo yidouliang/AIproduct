@@ -8,6 +8,9 @@
 	<form class="form-horizontal" onsubmit="return false" id="form">
 		<fieldset>
 			<div class='form-group'>
+
+                <input type="hidden" id="id" name="id"/>
+
 				<label class='col-md-2 control-label'>产品编码 Product Code</label>
 				<div class='col-md-10'>
 					<input class='form-control' placeholder='productCode' type='text' name='productCode' id='productCode' data-bv-notempty='true' data-bv-notempty-message='productCode 不能为空'>
@@ -210,7 +213,10 @@
 		});
 		
 		initData();
-		
+
+        /**
+		 * 填充表单中的数据
+         */
 		function initData(){
 			var id = getUrlParam("id");
 			if(id != ""){
@@ -255,6 +261,9 @@
 			}
 		}
 
+        /**
+		 * 更新产品信息
+         */
 		function update() {
 			$('#form').bootstrapValidator();
 			var bootstrapValidator = $("#form").data('bootstrapValidator');
@@ -262,7 +271,7 @@
 		    if(!bootstrapValidator.isValid()){
 			   return;
 		    }
-		    
+
 		    var formdata = $("#form").serializeObject();
 
 			$.ajax({

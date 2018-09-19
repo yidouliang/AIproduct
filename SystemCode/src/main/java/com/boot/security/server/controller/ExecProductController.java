@@ -29,6 +29,11 @@ public class ExecProductController {
     @Autowired
     private ExecProductDao execProductDao;
 
+    /**
+     * 新建一个商品对象
+     * @param execProduct       从前端传递过来的商品对象
+     * @return
+     */
     @PostMapping
     @ApiOperation(value = "保存")
     public ExecProduct save(@RequestBody ExecProduct execProduct) {
@@ -37,12 +42,22 @@ public class ExecProductController {
         return execProduct;
     }
 
+    /**
+     * 根据id值查询一个商品
+     * @param id        商品id
+     * @return
+     */
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取")
     public ExecProduct get(@PathVariable Long id) {
         return execProductDao.getById(id);
     }
 
+    /**
+     * 更新一个商品信息
+     * @param execProduct       前端传递的商品信息
+     * @return
+     */
     @PutMapping
     @ApiOperation(value = "修改")
     public ExecProduct update(@RequestBody ExecProduct execProduct) {
@@ -51,6 +66,11 @@ public class ExecProductController {
         return execProduct;
     }
 
+    /**
+     * 获取所有的商品列表
+     * @param request       分页请求
+     * @return
+     */
     @GetMapping
     @ApiOperation(value = "列表")
     public PageTableResponse list(PageTableRequest request) {
@@ -69,6 +89,10 @@ public class ExecProductController {
         }).handle(request);
     }
 
+    /**
+     * 根据商品的id值删除一个商品
+     * @param id        商品id值
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
