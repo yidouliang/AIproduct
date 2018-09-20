@@ -15,7 +15,7 @@ public class OrderThirdLevel extends BaseEntity<Long>{
 
     private String pSerialNumber;
 
-    private BigDecimal prouctOriginPrice;
+    private BigDecimal productOriginPrice;
 
     private BigDecimal productSalePrice;
 
@@ -92,13 +92,15 @@ public class OrderThirdLevel extends BaseEntity<Long>{
         this.pSerialNumber = pSerialNumber;
     }
 
-    public BigDecimal getProuctOriginPrice() {
-        return prouctOriginPrice;
+    public BigDecimal getProductOriginPrice() {
+        return productOriginPrice;
     }
 
-    public void setProuctOriginPrice(BigDecimal prouctOriginPrice) {
-        this.prouctOriginPrice = prouctOriginPrice;
+    public void setProductOriginPrice(BigDecimal productOriginPrice) {
+        this.productOriginPrice = productOriginPrice;
     }
+
+
 
     public BigDecimal getProductSalePrice() {
         return productSalePrice;

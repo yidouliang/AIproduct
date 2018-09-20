@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.security.server.dao.OrderThirdLevelDao">
+
+    <resultMap id="thirdLevel" type="OrderThirdLevel">
+        <id column="SID" property="id"/>
+        <result column="FIRST_LEVEL_ID" property="firstLevelId"/>
+        <result column="USER_CODE" property="userCode"/>
+        <result column="TELEPHONE" property="telephone"/>
+        <result column="SERIAL_NUMBER" property="serialNumber"/>
+        <result column="P_SERIAL_NUMBER" property="pSerialNumber"/>
+        <result column="PRODUCT_ORIGIN_PRICE" property="productOriginPrice"/>
+        <result column="PRODUCT_SALE_PRICE" property="productSalePrice"/>
+        <result column="ORDER_STATUS" property="orderStatus"/>
+        <result column="ERROR_CODE" property="errorCode"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="LAST_UPDATE_TIME" property="updateTime"/>
+        <result column="PRODUCT_TYPE_ID" property="productTypeId"/>
+        <result column="PRODUCT_TYPE_NAME" property="productTypeName"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="PRODUCT_CODE" property="productCode"/>
+        <result column="PRODUCT_IMG_URL" property="productImgUrl"/>
+        <result column="PRODUCT_DESC" property="productDesc"/>
+        <result column="BUY_NUM" property="buyNum"/>
+        <result column="ACTIVITY_NAME" property="activityName"/>
+        <result column="MKT_INV_ID" property="mktInvId"/>
+        <result column="DATA_STATE" property="dataState"/>
+        <result column="EXT_1" property="ext1"/>
+        <result column="EXT_2" property="ext2"/>
+        <result column="EXT_3" property="ext3"/>
+        <result column="EXT_4" property="ext4"/>
+
+    </resultMap>
+
+    <select id="listThirdLevel"  parameterType="Long" resultMap="thirdLevel">
+        select * from order_third_level o
+         where o.FIRST_LEVEL_ID = #{id}
+        ${params.orderBy}
+        limit #{offset}, #{limit}
+
+    </select>
+
+    <select id="count" resultType="int">
+        select count(1) from order_third_level t
+    </select>
+</mapper>
