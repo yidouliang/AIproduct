@@ -53,13 +53,16 @@ function init(){
                     "render": function (data, type, row) {
                         var id = row['id'];
                         var href = "updateOrderFirstLevel.html?id=" + id;
+                        var href2 = "orderThirdLevelList.html?id=" + id;
                         var edit = buttonEdit(href, "", pers);
                         var del = buttonDel(id, "", pers);
-                        return edit + del;
+                        var about = buttonAbout(href2, "", pers);
+                        return edit + del + about;
                     }
                 },
 
             ],
+            "iDisplayLength": 3,
             "order": [[ 0, "asc" ]]
         } );
 }
@@ -250,6 +253,9 @@ function del(id){
         layer.close(1);
     });
 }
+
+
+
 layui.use('layer', function(){
     var layer = layui.layer;
 });
