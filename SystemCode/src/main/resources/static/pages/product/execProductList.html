@@ -31,6 +31,9 @@
 									</form>
 	                   			</td>
 	                   			<td align="right">
+                                    <button type="button" class="layui-btn layui-btn-sm" id="uploadExcel">
+                                        <i class="layui-icon">&#xe67c;</i>Excel导入
+                                    </button>
 	                   				<button class="layui-btn layui-btn-sm" onclick="location.href='addExecProduct.html'">
                                       <i class="layui-icon">&#xe608;</i> 添加
                                     </button>
@@ -108,6 +111,7 @@
 var pers = checkPermission();
 
 var example;
+
 function init(){
 	example = 
     	$('#dt-table').DataTable({
@@ -175,6 +179,27 @@ function init(){
 
 layui.use('layer', function(){
     var layer = layui.layer;
+});
+
+layui.use('upload', function(){
+    var upload = layui.upload;
+
+    var uploadInst = upload.render({
+        elem: '#uploadExcel'
+        ,url: '/execProducts/excel'
+        ,accept: 'file'
+        ,before: function () {
+            layer.load(1);
+        }
+        ,done: function(res){
+            layer.closeAll("loading");
+            layer.msg("导入成功！共导入" + res.type + "条数据");
+        }
+        ,error: function(){
+            layer.closeAll("loading");
+            layer.msg("从Excel导入数据失败");
+        }
+    });
 });
 
 function del(id){

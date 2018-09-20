@@ -1,22 +1,20 @@
 package com.boot.security.server.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.boot.security.server.convert.ExcelProduct2ExecProduct;
+import com.boot.security.server.dto.ExcelProduct;
+import com.boot.security.server.model.ExecProduct;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * excel工具类
@@ -176,4 +174,34 @@ public class ExcelUtil {
 
 		return workbook;
 	}
+
+    /**
+     * 从Excel中导入ExecProduct信息
+     * @param excel
+     * @return
+     */
+	public static List<ExecProduct> ExcelImport(File excel) throws IOException {
+        List<ExcelProduct> excelProductList = new ArrayList<>();
+        XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(excel));
+        XSSFSheet sheet = null;
+        XSSFRow row = null;
+        XSSFCell cell = null;
+        String[] content = new String[10];
+        for(int i=0; i<wb.getNumberOfSheets(); i++) {
+            sheet = wb.getSheetAt(i);
+            for (int j = 1; j < sheet.getLastRowNum() + 1; j++) {
+                row = sheet.getRow(j);
+                for (int z = 0; z < row.getLastCellNum(); z++) {
+                    cell = row.getCell(z);
+                    if (cell != null) {
+                        cell.setCellType(CellType.STRING);
+                        content[z] = cell.getStringCellValue();
+                    }
+                }
+                ExcelProduct product = new ExcelProduct(content);
+                excelProductList.add(product);
+            }
+        }
+        return ExcelProduct2ExecProduct.convert(excelProductList);
+    }
 }

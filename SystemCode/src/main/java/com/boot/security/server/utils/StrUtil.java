@@ -1,5 +1,8 @@
 package com.boot.security.server.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -52,4 +55,18 @@ public class StrUtil {
 		return buffer.toString();
 	}
 
+	/**
+	 * 将字符串转换为Date类型
+	 * @param str
+	 * @return
+	 */
+	public static Date str2Date(String str) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

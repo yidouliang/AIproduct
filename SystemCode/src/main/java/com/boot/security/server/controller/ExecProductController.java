@@ -1,7 +1,12 @@
 package com.boot.security.server.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import com.boot.security.server.model.FileInfo;
+import com.boot.security.server.service.FileService;
+import com.boot.security.server.utils.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +26,7 @@ import com.boot.security.server.dao.ExecProductDao;
 import com.boot.security.server.model.ExecProduct;
 
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/execProducts")
@@ -28,6 +34,9 @@ public class ExecProductController {
 
     @Autowired
     private ExecProductDao execProductDao;
+
+    @Autowired
+    private FileService fileService;
 
     /**
      * 新建一个商品对象
@@ -97,5 +106,19 @@ public class ExecProductController {
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
         execProductDao.delete(id);
+    }
+
+
+    @PostMapping("/excel")
+    @ApiOperation(value = "从Excel中导入产品数据")
+    public FileInfo importExcel(MultipartFile file) throws IOException {
+        FileInfo fileInfo = fileService.save(file);
+        File excel = new File(fileInfo.getPath());
+        List<ExecProduct> execProductList = ExcelUtil.ExcelImport(excel);
+        for(ExecProduct product : execProductList) {
+            execProductDao.save(product);
+        }
+        fileInfo.setType(execProductList.size());
+        return fileInfo;
     }
 }
