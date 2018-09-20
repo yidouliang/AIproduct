@@ -1,18 +1,29 @@
 $(document).ready(function() {
-    init();
+    $("#odt-table").dataTable().fnDestroy();
+    initData();
 });
 
 var example;
 //加载初始化数据
 function initData(){
     example =
-    $('#dt-table').DataTable({
+    $('#odt-table').DataTable({
         "searching": false,
         "processing": false,
         "serverSide" : true,
+        "destroy": true,
+        "retrieve":true,
+        // "ajax": {
+        //     "url" : "${CONTEXT_PATH}/orderThirdLevels?id="+getParam(),
+        //     "type":"get",
+        //     "error" : function(data,e){
+        //         alert("系统繁忙，请稍后重试！");
+        //     },
+        // },
         "ajax": {
-            "url" : "/orderThirdLevels/"+getParam(),
-            "type":"get",
+            url: "/orderThirdLevels?id="+getParam(),
+            "dataType" : 'json',
+            type: 'GET',
         },
         "dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",
         "columns": [
@@ -42,18 +53,6 @@ function initData(){
             {"data" : "ext4", "defaultContent" : ""},
             {"data" : "createTime", "defaultContent" : ""},
             {"data" : "updateTime", "defaultContent" : ""},
-            {
-                "data": "",
-                "defaultContent": "",
-                "orderable":false,
-                "render": function (data, type, row) {
-                    var id = row['id'];
-                    var href = "updateOrderFirstLevel.html?id=" + id;
-                    var edit = buttonEdit(href, "", pers);
-                    var del = buttonDel(id, "", pers);
-                    return edit + del + about;
-                }
-            },
 
         ],
         "iDisplayLength": 10,

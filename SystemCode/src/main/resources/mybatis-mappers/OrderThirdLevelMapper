@@ -4,7 +4,7 @@
 <mapper namespace="com.boot.security.server.dao.OrderThirdLevelDao">
 
     <resultMap id="thirdLevel" type="OrderThirdLevel">
-        <id column="SID" property="id"/>
+        <id column="ID" property="id"/>
         <result column="FIRST_LEVEL_ID" property="firstLevelId"/>
         <result column="USER_CODE" property="userCode"/>
         <result column="TELEPHONE" property="telephone"/>
@@ -33,15 +33,16 @@
 
     </resultMap>
 
-    <select id="listThirdLevel"  parameterType="Long" resultMap="thirdLevel">
+    <select id="listThirdLevel" resultMap="thirdLevel">
         select * from order_third_level o
-         where o.FIRST_LEVEL_ID = #{id}
+        where o.FIRST_LEVEL_ID = #{id}
         ${params.orderBy}
         limit #{offset}, #{limit}
 
     </select>
 
     <select id="count" resultType="int">
-        select count(1) from order_third_level t
+        select count(ID) from order_third_level t
+        where t.FIRST_LEVEL_ID = #{id}
     </select>
 </mapper>

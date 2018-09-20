@@ -1,17 +1,15 @@
 package com.boot.security.server.controller;
 
 import com.boot.security.server.dao.OrderThirdLevelDao;
-import com.boot.security.server.model.OrderFirstLevel;
 import com.boot.security.server.model.OrderThirdLevel;
 import com.boot.security.server.page.table.PageTableHandler;
 import com.boot.security.server.page.table.PageTableRequest;
 import com.boot.security.server.page.table.PageTableResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.boot.security.server.page.table.PageTableHandler.CountHandler;
+import com.boot.security.server.page.table.PageTableHandler.ListHandler;
 
 import java.util.List;
 
@@ -24,20 +22,20 @@ public class OrderThirdLevelController {
     private OrderThirdLevelDao orderThirdLevelDao;
 
 
-    @GetMapping("/{id}")
+    @GetMapping()
     @ApiOperation(value = "获取三级订单信息")
-    public PageTableResponse list(PageTableRequest request,@PathVariable("id") Long firstLevelId) {
-        return new PageTableHandler(new PageTableHandler.CountHandler() {
+    public PageTableResponse list(PageTableRequest request,@RequestParam("id") Long fId) {
+        return new PageTableHandler(new CountHandler() {
 
             @Override
             public int count(PageTableRequest request) {
-                return orderThirdLevelDao.count(request.getParams());
+                return orderThirdLevelDao.count(request.getParams(),fId);
             }
-        }, new PageTableHandler.ListHandler() {
+        }, new ListHandler() {
 
             @Override
             public List<OrderThirdLevel> list(PageTableRequest request) {
-                return orderThirdLevelDao.listThirdLevel(request.getParams(),request.getOffset(),request.getLimit(),firstLevelId);
+                return orderThirdLevelDao.listThirdLevel(request.getParams(),request.getOffset(),request.getLimit(),fId);
             }
         }).handle(request);
     }
