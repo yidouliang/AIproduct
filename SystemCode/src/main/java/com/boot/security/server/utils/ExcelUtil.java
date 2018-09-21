@@ -182,10 +182,15 @@ public class ExcelUtil {
      */
 	public static List<ExecProduct> ExcelImport(File excel) throws IOException {
         List<ExcelProduct> excelProductList = new ArrayList<>();
-        XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(excel));
-        XSSFSheet sheet = null;
-        XSSFRow row = null;
-        XSSFCell cell = null;
+        Workbook wb;
+        if(is2003Excel(excel)) {
+            wb = new HSSFWorkbook(new FileInputStream(excel));
+        } else {
+            wb = new XSSFWorkbook(new FileInputStream(excel));
+        }
+        Sheet sheet = null;
+        Row row = null;
+        Cell cell = null;
         String[] content = new String[10];
         for(int i=0; i<wb.getNumberOfSheets(); i++) {
             sheet = wb.getSheetAt(i);
@@ -204,4 +209,28 @@ public class ExcelUtil {
         }
         return ExcelProduct2ExecProduct.convert(excelProductList);
     }
+
+    /**
+     * 判断Excel的版本
+     * @param excel
+     * @return
+     */
+    public static boolean is2003Excel(File excel) {
+	    String originName = excel.getName();
+	    String suffix = originName.substring(originName.lastIndexOf("."));
+        return ".xls".equals(suffix);
+    }
+
+    /**
+     * 判断该文件是否是Excel文件
+     * @param excel
+     * @return
+     */
+    public static boolean isExcel(File excel) {
+        String originName = excel.getName();
+        String suffix = originName.substring(originName.lastIndexOf("."));
+        return ".xls".equals(suffix) || ".xlsx".equals(suffix);
+    }
+
+
 }

@@ -193,7 +193,7 @@ layui.use('upload', function(){
         }
         ,done: function(res){
             layer.closeAll("loading");
-            layer.msg("导入成功！共导入" + res.type + "条数据");
+            layer.msg(res.message);
         }
         ,error: function(){
             layer.closeAll("loading");

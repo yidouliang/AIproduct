@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.boot.security.server.dto.ResponseInfo;
 import com.boot.security.server.model.FileInfo;
 import com.boot.security.server.service.FileService;
 import com.boot.security.server.utils.ExcelUtil;
@@ -109,16 +110,26 @@ public class ExecProductController {
     }
 
 
+    /**
+     * 从Excel中导入产品信息
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/excel")
     @ApiOperation(value = "从Excel中导入产品数据")
-    public FileInfo importExcel(MultipartFile file) throws IOException {
+    public ResponseInfo importExcel(MultipartFile file) throws IOException {
         FileInfo fileInfo = fileService.save(file);
         File excel = new File(fileInfo.getPath());
+        if(!ExcelUtil.isExcel(excel)) {
+            excel.delete();
+            return new ResponseInfo("500", "Excel格式错误");
+        }
         List<ExecProduct> execProductList = ExcelUtil.ExcelImport(excel);
         for(ExecProduct product : execProductList) {
             execProductDao.save(product);
         }
-        fileInfo.setType(execProductList.size());
-        return fileInfo;
+        excel.delete();     //删除该Excel文件
+        return new ResponseInfo("200", "导入成功！共导入" + execProductList.size() + "条数据");
     }
 }
