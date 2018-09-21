@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.boot.security.server.convert.ExecProduct2ExecProductDto;
+import com.boot.security.server.dto.ExecProductDto;
 import com.boot.security.server.dto.ResponseInfo;
 import com.boot.security.server.model.FileInfo;
 import com.boot.security.server.service.FileService;
@@ -38,6 +40,9 @@ public class ExecProductController {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private ExecProduct2ExecProductDto convert;
 
     /**
      * 新建一个商品对象
@@ -93,8 +98,9 @@ public class ExecProductController {
         }, new ListHandler() {
 
             @Override
-            public List<ExecProduct> list(PageTableRequest request) {
-                return execProductDao.list(request.getParams(), request.getOffset(), request.getLimit());
+            public List<ExecProductDto> list(PageTableRequest request) {
+                List<ExecProduct> execProductList = execProductDao.list(request.getParams(), request.getOffset(), request.getLimit());
+                return convert.convert(execProductList);
             }
         }).handle(request);
     }
