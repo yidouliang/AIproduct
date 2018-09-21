@@ -50,7 +50,7 @@ function buttonAbout(href, permission, pers){
             return "";
         }
     }
-    var btn = $("<button class='layui-btn layui-btn-xs' title='详情' onclick='window.location=\"" + href +"\"'><i class='layui-icon'>&#xe6b2;</i></button>");
+    var btn = $("<button class='layui-btn layui-btn-xs' title='详情' onclick='window.location=\"" + href +"\"'><i class='layui-icon'>查看详情</i></button>");
     return btn.prop("outerHTML");
 }
 

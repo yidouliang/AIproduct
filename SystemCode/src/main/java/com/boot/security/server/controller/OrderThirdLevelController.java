@@ -24,7 +24,7 @@ public class OrderThirdLevelController {
 
     @GetMapping()
     @ApiOperation(value = "获取三级订单信息")
-    public PageTableResponse list(PageTableRequest request,@RequestParam("id") Long fId) {
+    public PageTableResponse list(PageTableRequest request,@RequestParam("firstLevelId") Long fId) {
         return new PageTableHandler(new CountHandler() {
 
             @Override

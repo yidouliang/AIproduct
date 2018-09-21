@@ -1,54 +1,77 @@
 package com.boot.security.server.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class OrderThirdLevel extends BaseEntity<Long>{
 
-
+    @JsonProperty("FIRST_LEVEL_ID")
     private Long firstLevelId;
 
+    @JsonProperty("USER_CODE")
     private String userCode;
 
     private String telephone;
 
+    @JsonProperty("SERIAL_NUMBER")
     private String serialNumber;
 
+    @JsonProperty("P_SERIAL_NUMBER")
     private String pSerialNumber;
 
+    @JsonProperty("PRODUCT_ORIGIN_PRICE")
     private BigDecimal productOriginPrice;
 
+    @JsonProperty("PRODUCT_SALE_PRICE")
     private BigDecimal productSalePrice;
 
+    @JsonProperty("ORDER_STATUS")
     private Integer orderStatus;
 
+    @JsonProperty("ERROR_CODE")
     private Integer errorCode;
 
+    @JsonProperty("PRODUCT_TYPE_ID")
     private Integer productTypeId;
 
+    @JsonProperty("PRODUCT_TYPE_NAME")
     private String productTypeName;
 
+    @JsonProperty("PRODUCT_NAME")
     private String productName;
 
+    @JsonProperty("PRODUCT_CODE")
     private String productCode;
 
+    @JsonProperty("PRODUCT_IMG_URL")
     private String productImgUrl;
 
+    @JsonProperty("PRODUCT_DESC")
     private String productDesc;
 
+    @JsonProperty("BUY_NUM")
     private Integer buyNum;
 
+    @JsonProperty("ACTIVITY_NAME")
     private String activityName;
 
+    @JsonProperty("MKT_INV_ID")
     private Long mktInvId;
 
+    @JsonProperty("DATA_STATE")
     private char dataState;
 
+    @JsonProperty("EXT_1")
     private String ext1;
 
+    @JsonProperty("EXT_2")
     private String ext2;
 
+    @JsonProperty("EXT_3")
     private String ext3;
 
+    @JsonProperty("EXT_4")
     private String ext4;
 
 
